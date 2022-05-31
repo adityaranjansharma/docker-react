@@ -33,3 +33,12 @@ stages:
         containerRegistry: 'DockerHub'
         repository: 'adityaranjansharma/frontend'
         command: 'push'
+    - task: BeanstalkDeployApplication@1
+      inputs:
+        awsCredentials: 'aws-connection'
+        regionName: 'eu-west-1'
+        applicationName: 'docker-react'
+        environmentName: 'Dockerreact-env'
+        applicationType: 'version'
+        deploymentBundleBucket: elasticbeanstalk-us-east-1-280853110689
+        
