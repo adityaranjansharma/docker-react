@@ -39,7 +39,7 @@ stages:
         awsCredentials: 'aws-connection'
         regionName: 'eu-west-1'
         bucketName: 'elasticbeanstalk-us-east-1-280853110689'
-        sourceFolder: '**/*'
+        sourceFolder: ''
         globExpressions: output.zip
         createBucket: true
     - task: BeanstalkDeployApplication@1
