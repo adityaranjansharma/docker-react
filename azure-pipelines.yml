@@ -10,6 +10,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  ImageName: 'adityaranjansharma/frontend'  
 
 stages:
 - stage: Build
@@ -24,6 +25,11 @@ stages:
       displayName: Build an image
       inputs:
         command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        repository: '$(ImageName)'
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile.dev'
+        tags: $(tag)
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerHub'
+        repository: 'adityaranjansharma/frontend'
+        command: 'push'
