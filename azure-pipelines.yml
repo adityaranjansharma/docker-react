@@ -37,7 +37,7 @@ stages:
       displayName: 'S3 Upload: angular-docker-bucket'
       inputs:
         awsCredentials: 'aws-connection'
-        regionName: 'eu-west-1'
+        regionName: 'us-east-1'
         bucketName: 'elasticbeanstalk-us-east-1-280853110689'
         sourceFolder: ''
         globExpressions: output.zip
