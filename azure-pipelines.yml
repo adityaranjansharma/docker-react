@@ -21,33 +21,34 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        repository: '$(ImageName)'
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: $(tag)
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'DockerHub'
-        repository: 'adityaranjansharma/frontend'
-        command: 'push'
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     command: build
+    #     repository: '$(ImageName)'
+    #     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    #     tags: $(tag)
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'DockerHub'
+    #     repository: 'adityaranjansharma/frontend'
+    #     command: 'push'
     - task: S3Upload@1
       inputs:
         awsCredentials: 'aws-connection'
         regionName: 'us-east-1'
         bucketName: 'elasticbeanstalk-us-east-1-280853110689'
-        globExpressions: '**'
+        # globExpressions: '**'
+        globExpressions: output.zip
     - task: BeanstalkDeployApplication@1
       inputs:
         awsCredentials: 'aws-connection'
         regionName: 'us-east-1'
         applicationName: 'docker-react'
         environmentName: 'Dockerreact-env'
-        applicationType: 'version'
+        applicationType: s3
         deploymentBundleBucket: elasticbeanstalk-us-east-1-280853110689
-        # deploymentBundleKey: output.zip
+        deploymentBundleKey: output.zip
         logRequest: true
         logResponse: true
         versionLabel: 'Sample Application'
