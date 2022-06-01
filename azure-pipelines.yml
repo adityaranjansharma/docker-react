@@ -55,5 +55,5 @@ stages:
         deploymentBundleKey: output.zip
         logRequest: true
         logResponse: true
-        versionLabel: 'Sample Application'
+        versionLabel: 'Sample Application 10'
         
