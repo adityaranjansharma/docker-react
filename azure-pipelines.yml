@@ -33,6 +33,10 @@ stages:
     #     containerRegistry: 'DockerHub'
     #     repository: 'adityaranjansharma/frontend'
     #     command: 'push'
+    - script: |
+        # cd elastic-beanstalk
+        zip -r output.zip ./*
+      displayName: 'install, build and zip'
     - task: S3Upload@1
       inputs:
         awsCredentials: 'aws-connection'
