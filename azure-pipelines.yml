@@ -33,15 +33,21 @@ stages:
         containerRegistry: 'DockerHub'
         repository: 'adityaranjansharma/frontend'
         command: 'push'
+    # - task: S3Upload@1
+    #   displayName: 'S3 Upload: angular-docker-bucket'
+    #   inputs:
+    #     awsCredentials: 'aws-connection'
+    #     regionName: 'us-east-1'
+    #     bucketName: 'elasticbeanstalk-us-east-1-280853110689'
+    #     sourceFolder: ''
+    #     globExpressions: output.zip
+    #     createBucket: true
     - task: S3Upload@1
-      displayName: 'S3 Upload: angular-docker-bucket'
       inputs:
         awsCredentials: 'aws-connection'
         regionName: 'us-east-1'
         bucketName: 'elasticbeanstalk-us-east-1-280853110689'
-        sourceFolder: ''
-        globExpressions: output.zip
-        createBucket: true
+        globExpressions: '**'
     - task: BeanstalkDeployApplication@1
       inputs:
         awsCredentials: 'aws-connection'
@@ -50,7 +56,8 @@ stages:
         environmentName: 'Dockerreact-env'
         applicationType: 'version'
         deploymentBundleBucket: elasticbeanstalk-us-east-1-280853110689
-        deploymentBundleKey: output.zip
+        # deploymentBundleKey: output.zip
         logRequest: true
         logResponse: true
         versionLabel: '3'
+        
